@@ -1,5 +1,5 @@
 # Fre-GAN [WIP]
-Fre-GAN: Adversarial Frequency-consistent Audio Synthesis
+[Fre-GAN: Adversarial Frequency-consistent Audio Synthesis](https://arxiv.org/abs/2106.02297)
 
 
 ## Citation
