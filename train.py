@@ -151,10 +151,10 @@ def train(rank, a, h):
             optim_g.zero_grad()
 
             # L1 Mel-Spectrogram Loss
-            #loss_mel = F.l1_loss(y_mel, y_g_hat_mel) * 45
+            loss_mel = F.l1_loss(y_mel, y_g_hat_mel) * 45
 
-            sc_loss, mag_loss = stft_loss(y_g_hat[:, :, :y.size(2)].squeeze(1), y.squeeze(1))
-            loss_mel = h.lambda_aux * (sc_loss + mag_loss)  # STFT Loss
+            # sc_loss, mag_loss = stft_loss(y_g_hat[:, :, :y.size(2)].squeeze(1), y.squeeze(1))
+            # loss_mel = h.lambda_aux * (sc_loss + mag_loss)  # STFT Loss
 
             if steps > h.disc_start_step:
                 y_df_hat_r, y_df_hat_g, fmap_f_r, fmap_f_g = mpd(y, y_g_hat)
@@ -163,7 +163,7 @@ def train(rank, a, h):
                 loss_fm_s = feature_loss(fmap_s_r, fmap_s_g)
                 loss_gen_f, losses_gen_f = generator_loss(y_df_hat_g)
                 loss_gen_s, losses_gen_s = generator_loss(y_ds_hat_g)
-                loss_gen_all = loss_gen_s + loss_gen_f + loss_fm_s + loss_fm_f + loss_mel
+                loss_gen_all = loss_gen_s + loss_gen_f + (2 * (loss_fm_s + loss_fm_f)) + loss_mel
             else:
                 loss_gen_all = loss_mel
 
