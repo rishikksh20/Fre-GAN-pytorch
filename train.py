@@ -105,7 +105,6 @@ def train(rank, a, h):
     generator.train()
     mpd.train()
     msd.train()
-    stft_loss = MultiResolutionSTFTLoss()
     for epoch in range(max(0, last_epoch), a.training_epochs):
         if rank == 0:
             start = time.time()
@@ -117,14 +116,14 @@ def train(rank, a, h):
         for i, batch in enumerate(train_loader):
             if rank == 0:
                 start_b = time.time()
-            x, y, _, y_mel, z = batch
+            x, y, _, y_mel = batch
             x = torch.autograd.Variable(x.to(device, non_blocking=True))
             y = torch.autograd.Variable(y.to(device, non_blocking=True))
             y_mel = torch.autograd.Variable(y_mel.to(device, non_blocking=True))
-            z = torch.autograd.Variable(z.to(device, non_blocking=True))
+
             y = y.unsqueeze(1)
 
-            y_g_hat = generator(z, x)
+            y_g_hat = generator(x)
 
             y_g_hat_mel = mel_spectrogram(y_g_hat.squeeze(1), h.n_fft, h.num_mels, h.sampling_rate, h.hop_size,
                                           h.win_size,
@@ -205,8 +204,8 @@ def train(rank, a, h):
                     val_err_tot = 0
                     with torch.no_grad():
                         for j, batch in enumerate(validation_loader):
-                            x, y, _, y_mel, z = batch
-                            y_g_hat = generator(z.to(device), x.to(device))
+                            x, y, _, y_mel = batch
+                            y_g_hat = generator(x.to(device))
                             y_mel = torch.autograd.Variable(y_mel.to(device, non_blocking=True))
                             y_g_hat_mel = mel_spectrogram(y_g_hat.squeeze(1), h.n_fft, h.num_mels, h.sampling_rate,
                                                           h.hop_size, h.win_size,
