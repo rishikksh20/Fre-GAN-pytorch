@@ -1,3 +1,12 @@
+# Copyright (c) 2019, Adobe Inc. All rights reserved.
+#
+# This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike
+# 4.0 International Public License. To view a copy of this license, visit
+# https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.
+
+# DWT code borrow from https://github.com/LiQiufu/WaveSNet/blob/12cb9d24208c3d26917bf953618c30f0c6b0f03d/DWT_IDWT/DWT_IDWT_layer.py
+
+
 import pywt
 import torch
 import torch.nn as nn

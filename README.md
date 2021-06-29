@@ -1,8 +1,12 @@
-# Fre-GAN [WIP]
+# Fre-GAN Vocoder
 [Fre-GAN: Adversarial Frequency-consistent Audio Synthesis](https://arxiv.org/abs/2106.02297)
 
+## Training:
+```
+python train.py --config config.json
+```
 
-## Citation
+## Citation:
 ```
 @misc{kim2021fregan,
       title={Fre-GAN: Adversarial Frequency-consistent Audio Synthesis}, 
@@ -13,3 +17,7 @@
       primaryClass={eess.AS}
 }
 ```
+
+## References:
+* [Hi-Fi-GAN repo](https://github.com/jik876/hifi-gan)
+* [WaveSNet repo](https://github.com/LiQiufu/WaveSNet)
