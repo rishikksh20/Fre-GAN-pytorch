@@ -16,7 +16,7 @@ from torch.nn.parallel import DistributedDataParallel
 from utils import AttrDict, build_env
 from meldataset import MelDataset, mel_spectrogram, get_dataset_filelist
 from generator import FreGAN
-from discriminator import MultiPeriodDiscriminator, MultiResSpecDiscriminator
+from discriminator import ResWiseMultiPeriodDiscriminator, ResWiseMultiScaleDiscriminator
 from loss import feature_loss, generator_loss, discriminator_loss
 from utils import plot_spectrogram, scan_checkpoint, load_checkpoint, save_checkpoint
 from stft_loss import MultiResolutionSTFTLoss
@@ -33,8 +33,8 @@ def train(rank, a, h):
     device = torch.device('cuda:{:d}'.format(rank))
 
     generator = FreGAN(h).to(device)
-    mpd = MultiPeriodDiscriminator().to(device)
-    msd = MultiResSpecDiscriminator().to(device)
+    mpd = ResWiseMultiPeriodDiscriminator().to(device)
+    msd = ResWiseMultiScaleDiscriminator().to(device)
 
     if rank == 0:
         print(generator)
