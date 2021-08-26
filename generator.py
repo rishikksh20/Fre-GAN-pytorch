@@ -167,9 +167,9 @@ class FreGAN(torch.nn.Module):
         for l in self.resblocks:
             l.remove_weight_norm()
         for l in self.cond_up:
-            l.remove_weight_norm()
+            remove_weight_norm(l)
         for l in self.res_output:
-            l.remove_weight_norm()
+            remove_weight_norm(l[1])
         remove_weight_norm(self.conv_pre)
         remove_weight_norm(self.conv_post)
 

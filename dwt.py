@@ -72,5 +72,5 @@ class DWT_1D(nn.Module):
         assert len(input.size()) == 3
         assert input.size()[1] == self.in_channels
         input = F.pad(input, pad=self.pad_sizes, mode=self.pad_type)
-        return F.conv1d(input, self.filter_low, stride=self.stride, groups=self.groups), \
-               F.conv1d(input, self.filter_high, stride=self.stride, groups=self.groups)
+        return F.conv1d(input, self.filter_low.to(input.device), stride=self.stride, groups=self.groups), \
+               F.conv1d(input, self.filter_high.to(input.device), stride=self.stride, groups=self.groups)
